@@ -9,7 +9,19 @@ export const meta: MetaFunction = () => {
 
 export default function SignupForm() {
   return (
-    <form method="post">
+    <form
+      method="post"
+      // Disable browser's default validation
+      noValidate
+      onSubmit={(event) => {
+        const form = event.currentTarget;
+        // Prevent form submission if constraint
+        // validation fails
+        if (!form.reportValidity()) {
+          event.preventDefault();
+        }
+      }}
+    >
       <div>
         <label htmlFor="email">Email</label>
         <input id="email" name="email" type="email" required />
