@@ -1,11 +1,30 @@
-import type { MetaFunction } from "@remix-run/node";
+import { ActionFunctionArgs, json, type MetaFunction } from "@remix-run/node";
 import { useState } from "react";
+import { parse } from "@conform-to/validitystate";
+import { useActionData } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return [
     { title: "Form internals" },
     { name: "Form internals", content: "Form internals for conform" },
   ];
+};
+
+const constraints = {
+  email: {
+    type: "email",
+    required: true,
+  },
+  password: {
+    type: "password",
+    required: true,
+    minLength: 8,
+    pattern: "(?=.*?[a-z])(?=.*?[A-Z]).*",
+  },
+  confirmPassword: {
+    type: "password",
+    required: true,
+  },
 };
 
 function formatError({
@@ -50,8 +69,23 @@ type FormErrors = {
   confirmPassword?: string;
 };
 
+export async function action({ request }: ActionFunctionArgs) {
+  const formData = await request.formData();
+  const submission = parse(formData, {
+    constraints,
+    formatError,
+  });
+  if (submission.error) {
+    return json(submission, { status: 400 });
+  }
+  // return await signup(submission.value);
+  return json(submission.value);
+}
+
 export default function SignupForm() {
-  const [error, setError] = useState<FormErrors>({});
+  const lastSubmission = useActionData();
+  const [error, setError] = useState<FormErrors>(lastSubmission?.error ?? {});
+  // const [error, setError] = useState<FormErrors>({});
   return (
     <form
       method="post"
@@ -92,8 +126,7 @@ export default function SignupForm() {
         <input
           id="email"
           name="email"
-          type="email"
-          required
+          {...constraints.email}
           className={error.email ? "error" : ""}
         />
         <p>{error.email}</p>
@@ -103,10 +136,7 @@ export default function SignupForm() {
         <input
           id="passwd"
           name="password"
-          type="password"
-          required
-          minLength={8}
-          pattern="(?=.*?[a-z])(?=.*?[A-Z]).*"
+          {...constraints.email}
           className={error.password ? "error" : ""}
         />
         <p>{error.password}</p>
@@ -116,8 +146,7 @@ export default function SignupForm() {
         <input
           id="c-passwd"
           name="confirmPassword"
-          type="password"
-          required
+          {...constraints.email}
           className={error.confirmPassword ? "error" : ""}
         />
         <p>{error.confirmPassword}</p>

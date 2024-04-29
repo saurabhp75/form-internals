@@ -60,3 +60,10 @@ console.log(input.validationMessage);
 - To get around this we reset the error state before synchronizing the errors.
 
 ![](./invalid-event.png)
+
+## Introducing @conform-to/validitystate
+
+- Provides server validation.
+- Provides a ValidityState like interface based on the validation attributes.
+- Supports type inference and coercions
+- 0 kb on the client.
