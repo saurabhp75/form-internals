@@ -2,40 +2,34 @@ import type { MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "Form internals" },
+    { name: "Form internals", content: "Form internals for conform" },
   ];
 };
 
-export default function Index() {
+export default function SignupForm() {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
-    </div>
+    <form method="post">
+      <div>
+        <label htmlFor="email">Email</label>
+        <input id="email" name="email" type="email" required />
+      </div>
+      <div>
+        <label htmlFor="passwd">Password</label>
+        <input
+          id="passwd"
+          name="password"
+          type="password"
+          required
+          minLength={8}
+          pattern="(?=.*?[a-z])(?=.*?[A-Z]).*"
+        />
+      </div>
+      <div>
+        <label htmlFor="c-passwd">Confirm Password</label>
+        <input id="c-passwd" name="confirmPassword" type="password" required />
+      </div>
+      <button>Signup</button>
+    </form>
   );
 }

@@ -1,36 +1,14 @@
-# Welcome to Remix + Vite!
+# Form validation
 
-📖 See the [Remix docs](https://remix.run/docs) and the [Remix Vite docs](https://remix.run/docs/en/main/guides/vite) for details on supported features.
+![form](./form-validation.png)
 
-## Development
+## Browser mechanism for form validation
 
-Run the Vite dev server:
+- `Constraint validation` was introduced in HTML5.
+- Constraints like `required`, `type=email` etc. helps browser in validation.
+- Browser blocks the form submission and informs user if validation fails.
 
-```shellscript
-npm run dev
-```
+## Customization the form validation (Conform)
 
-## Deployment
-
-First, build your app for production:
-
-```sh
-npm run build
-```
-
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
+- First we disable the default form validation so that we can add custom logic.
+-
