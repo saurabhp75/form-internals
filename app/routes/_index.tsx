@@ -86,6 +86,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function SignupForm() {
   const lastSubmission = useActionData();
+  // synchronize the client error state with the server
   const [error, setError] = useState<FormErrors>(lastSubmission?.error ?? {});
   return (
     <form
@@ -117,6 +118,7 @@ export default function SignupForm() {
           }
         }
 
+        // reset error state of the form elements
         setError({});
 
         // Prevent form submission if constraint
