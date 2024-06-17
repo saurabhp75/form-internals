@@ -11,6 +11,7 @@
 ## Customization the form validation (Conform)
 
 - First we disable the default form validation so that we can add custom logic.
+- `reportValidity()`: This method returns `true` if the element's child controls satisfy their validation constraints. When `false` is returned, cancelable `invalid` events are fired for each invalid child.
 - Then we customize the error messages.
 
 ## Error interface
