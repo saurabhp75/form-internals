@@ -27,6 +27,8 @@ const constraints = {
   },
 };
 
+// Derive custom error based on  
+// element and formData object
 function formatError({
   input,
   formData,
@@ -85,11 +87,12 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function SignupForm() {
   const lastSubmission = useActionData();
   const [error, setError] = useState<FormErrors>(lastSubmission?.error ?? {});
-  // const [error, setError] = useState<FormErrors>({});
   return (
     <form
       method="post"
-      // Called for every invalid input
+      // invalid event handler: Called for every invalid input
+      // reset error state (to last submission or default) before
+      // handling invalid event
       onInvalid={(event) => {
         const input = event.target as HTMLFormElement;
         setError((error) => ({
@@ -105,9 +108,11 @@ export default function SignupForm() {
         const form = event.currentTarget;
         const formData = new FormData(form);
 
-        // Set custom error messages
+        // form.elements is a list of all the form 
+        // controls contained in the <form> element
         for (const input of form.elements) {
           if (input instanceof HTMLInputElement) {
+            // Set custom error messages
             input.setCustomValidity(formatError({ input, formData }));
           }
         }
